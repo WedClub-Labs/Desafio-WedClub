@@ -1,6 +1,6 @@
 # Desafio WedClub 2021
 
-O desafio consiste em criar uma API REST com Laravel para um CRUD de usuários. E para o frontend uma aplicação Vue.js para renderizar e cadastrar os dados.
+O desafio consiste em criar uma API REST com Node.js para um CRUD de usuários. E para o frontend uma aplicação React.js para renderizar e cadastrar os dados. Adorariamos se souber aplicar o Typescript em ambos os contextos (backend e frontend).
 
 ## Requisitos:
  - Criar uma rota para retornar usuários
@@ -14,3 +14,6 @@ O desafio consiste em criar uma API REST com Laravel para um CRUD de usuários. 
 
 ## Instruções
 Queremos que você use a criatividade durante esse desafio, portanto fique a vontade para usar bibliotecas e/ou módulos de terceiros, assim como a arquitetura que tiver mais aptidão. Lembre-se que não é permitido copiar códigos prontos da internet. A entrega do desafio deve ser via Github através de um Pull Request com seu nome. O prazo de entrega é de 3 dias a partir do email recebido.
+
+
+Boa sorte!
