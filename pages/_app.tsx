@@ -1,12 +1,10 @@
-import { SSRProvider, Provider, defaultTheme } from "@adobe/react-spectrum";
+import { SSRProvider } from "@react-aria/ssr";
 import "../styles/globals.css";
 
 function MyApp({ Component, pageProps }) {
   return (
     <SSRProvider>
-      <Provider theme={defaultTheme} locale="pt-br">
-        <Component {...pageProps} />
-      </Provider>
+      <Component {...pageProps} />
     </SSRProvider>
   );
 }
