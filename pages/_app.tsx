@@ -3,7 +3,7 @@ import "../styles/globals.css";
 
 function MyApp({ Component, pageProps }) {
   return (
-    <SSRProvider children={undefined}>
+    <SSRProvider>
       <Provider theme={defaultTheme} locale="pt-br">
         <Component {...pageProps} />
       </Provider>
