@@ -1,27 +1,24 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { addDoc, collection } from "@firebase/firestore";
+import { addDoc, collection, getDocs } from "@firebase/firestore";
 import { db } from "../../../firebase";
 import { UserDoc } from "../../../types/User";
-import { getDocs } from "firebase/firestore";
+import validateUser from "../../../utils/validateUser";
 
 export default function handler(req: NextApiRequest, res: NextApiResponse) {
   switch (req.method) {
     case "GET":
-      get(req, res);
-      break;
+      return GET(req, res);
 
     case "PUT":
-      put(req, res);
-      break;
+      return PUT(req, res);
 
     default:
       res.status(405).end(`Method ${req.method} Not Allowed`);
   }
 }
 
-async function put(req: NextApiRequest, res: NextApiResponse) {
+async function PUT(req: NextApiRequest, res: NextApiResponse) {
   const [user, invalid] = validateUser(req.body);
-
   if (invalid) {
     res.status(400).end("Invalid User");
     return;
@@ -35,7 +32,7 @@ async function put(req: NextApiRequest, res: NextApiResponse) {
   });
 }
 
-async function get(req: NextApiRequest, res: NextApiResponse) {
+async function GET(req: NextApiRequest, res: NextApiResponse) {
   const querySnapshot = await getDocs(collection(db, "users"));
 
   const users = [];
@@ -47,25 +44,4 @@ async function get(req: NextApiRequest, res: NextApiResponse) {
   });
 
   res.status(200).json(users);
-}
-
-function validateUser(user: UserDoc): [UserDoc, boolean] {
-  const invalid =
-    user.first === undefined ||
-    user.last === undefined ||
-    user.birthday === undefined ||
-    user.email === undefined ||
-    user.phone === undefined;
-
-  user = invalid
-    ? null
-    : {
-        first: user.first,
-        last: user.last,
-        birthday: user.birthday,
-        email: user.email,
-        phone: user.phone,
-      };
-
-  return [user, invalid];
 }
