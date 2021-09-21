@@ -11,13 +11,18 @@
   "dependencies": {
     "@react-aria/ssr": "^3.1.0",
     "axios": "^0.21.4",
+    "classnames": "^2.3.1",
+    "cleave.js": "^1.6.0",
     "firebase": "^9.0.2",
     "next": "11.1.2",
     "react": "17.0.2",
+    "react-aria": "^3.10.0",
     "react-dom": "17.0.2",
     "react-query": "^3.24.3"
   },
   "devDependencies": {
+    "@types/classnames": "^2.3.1",
+    "@types/cleave.js": "^1.4.5",
     "@types/react": "^17.0.21",
     "autoprefixer": "^10.3.4",
     "eslint": "7.32.0",
