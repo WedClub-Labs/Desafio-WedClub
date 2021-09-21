@@ -27,8 +27,6 @@ export const getServerSideProps: GetServerSideProps<UserPropsType> =
 function Users() {
   const { data } = useQuery("users", getUsers);
 
-  console.log("data :>> ", data);
-
   return (
     <Layout>
       <div>
@@ -37,7 +35,7 @@ function Users() {
         <ul className="mb-8">
           {data?.map((user) => (
             <li className="mb-2" key={user.id}>
-              <Link href={`/user/${user.id}`}>
+              <Link href={`/usuario/${user.id}`}>
                 <a className="block w-full py-2 px-4 border-2 rounded-md">
                   <p className="text-lg font-semibold text-gray-700">
                     {user.first} {user.last}

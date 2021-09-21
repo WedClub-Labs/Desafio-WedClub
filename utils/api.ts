@@ -19,3 +19,9 @@ export const createUser = async (user: UserDoc): Promise<UserDocWithID> => {
 
   return response.data;
 };
+
+export const deleteUser = async (id: string): Promise<boolean> => {
+  const response = await axios.delete(`/user/${id}`);
+
+  return response.status === 200 && response.data;
+};

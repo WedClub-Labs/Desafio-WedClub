@@ -3,9 +3,16 @@ import dayjs from "dayjs";
 import { GetServerSideProps } from "next";
 import { useRouter } from "next/router";
 import React from "react";
-import { DehydratedState, QueryClient, dehydrate, useQuery } from "react-query";
+import {
+  DehydratedState,
+  QueryClient,
+  dehydrate,
+  useQuery,
+  useMutation,
+} from "react-query";
+import Button from "../../components/Button";
 import Layout from "../../components/Layout";
-import { getUser } from "../../utils/api";
+import { deleteUser, getUser } from "../../utils/api";
 
 type UserPropsType = {
   dehydratedState: DehydratedState;
@@ -31,30 +38,61 @@ function User() {
   const id = router.query.userID as string;
   const { data } = useQuery(["user", id], () => getUser(id));
 
+  const { mutate, isLoading } = useMutation(deleteUser, {
+    onSuccess: () => router.push(`/`),
+  });
+
+  const submitDelete = () => {
+    mutate(id);
+  };
+
   return (
     <Layout>
-      <div className="flex items-center mb-6">
-        <img
-          className="w-16 h-16 rounded-full mr-4"
-          src="https://picsum.photos/seed/picsum/200/200"
-          alt=""
-        />
+      <div className="mb-8">
+        <div className="flex items-center mb-6">
+          <img
+            className="w-16 h-16 rounded-full mr-4"
+            src="https://picsum.photos/seed/picsum/200/200"
+            alt=""
+          />
 
-        <h1 className="text-4xl text-gray-700 font-light">
-          {data.first} {data.last}
-        </h1>
+          <h1 className="text-4xl text-gray-700 font-light">
+            {data.first} {data.last}
+          </h1>
+        </div>
+
+        <p>
+          <span className="font-bold">Email:</span> {data.email}
+        </p>
+        <p>
+          <span className="font-bold">Celular:</span> {data.phone}
+        </p>
+        <p>
+          <span className="font-bold">Aniversário:</span>{" "}
+          {dayjs(data.birthday).format("DD/MM/YYYY")}
+        </p>
       </div>
 
-      <p>
-        <span className="font-bold">Email:</span> {data.email}
-      </p>
-      <p>
-        <span className="font-bold">Celular:</span> {data.phone}
-      </p>
-      <p>
-        <span className="font-bold">Aniversário:</span>{" "}
-        {dayjs(data.birthday).format("DD/MM/YYYY")}
-      </p>
+      <div className="grid grid-cols-2 gap-8">
+        <Button
+          onPress={() =>
+            alert("Ops, acho que não deu tempo de implementar isso")
+          }
+          isFull
+          action="primary"
+          variant="outlined"
+        >
+          Editar
+        </Button>
+        <Button
+          isDisabled={isLoading}
+          onPress={submitDelete}
+          isFull
+          action="negative"
+        >
+          Apagar
+        </Button>
+      </div>
     </Layout>
   );
 }
