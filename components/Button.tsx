@@ -5,6 +5,31 @@ import { ComponentType, CSSProperties, ReactNode, useRef } from "react";
 import Link from "next/link";
 
 const ButtonComponent = (props: any) => <button {...props} />;
+const LinkComponent = ({
+  href,
+  as,
+  replace,
+  scroll,
+  shallow,
+  passHref,
+  prefetch,
+  locale,
+
+  ...rest
+}: any) => (
+  <Link
+    href={href}
+    as={as}
+    replace={replace}
+    scroll={scroll}
+    shallow={shallow}
+    passHref={passHref}
+    prefetch={prefetch}
+    locale={locale}
+  >
+    <a {...rest} />
+  </Link>
+);
 
 export type ButtonProps = {
   isDisabled?: boolean;
@@ -27,7 +52,7 @@ function Button({
   const ref = useRef(null);
   const { buttonProps } = useButton(props, ref);
 
-  const Component = href ? Link : ButtonComponent;
+  const Component = href ? LinkComponent : ButtonComponent;
 
   return (
     <Component
