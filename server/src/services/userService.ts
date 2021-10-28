@@ -27,12 +27,7 @@ export class UserService {
   }
 
   async getAllUsers (): Promise<User[]> {
-    const allUsers = await prismaClient.user.findMany({
-      select: {
-        email: true,
-        userName: true
-      }
-    })
+    const allUsers = await prismaClient.user.findMany()
 
     return allUsers
   }

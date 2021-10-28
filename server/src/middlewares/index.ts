@@ -1,6 +1,10 @@
 import { NextFunction, Request, Response } from 'express'
 import { PrismaClientKnownRequestError } from '../prisma'
-import { dataNotFound, insertDataConflict, serverError } from '../utils/objError'
+import {
+  dataNotFound,
+  insertDataConflict,
+  serverError,
+} from '../utils/objError'
 
 export const midErr = (
   err: Error,
@@ -14,13 +18,17 @@ export const midErr = (
     if (err.code === 'P2002') {
       return res
         .status(insertDataConflict.statusCode)
-        .json(insertDataConflict.message)
+        .json({ message: insertDataConflict.message })
     }
 
     if (err.code === 'P2025') {
-      return res.status(dataNotFound.statusCode).json(dataNotFound.message)
+      return res
+        .status(dataNotFound.statusCode)
+        .json({ message: dataNotFound.message })
     }
   }
 
-  return res.status(serverError.statusCode).json(serverError.message)
+  return res
+    .status(serverError.statusCode)
+    .json({ message: serverError.message })
 }

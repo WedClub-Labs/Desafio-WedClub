@@ -1,6 +1,6 @@
 export const insertDataConflict = {
   statusCode: 409,
-  message: 'User already exists!'
+  message: 'Email already exists!'
 }
 
 export const dataNotFound = {
