@@ -8,10 +8,10 @@ datasource db {
 }
 
 model User {
-  id        String @id @default(cuid())
-  firstName String
-  lastName  String
+  id       String @id @default(cuid())
+  userName String
+  email    String @unique
+  password String
 
-  @@unique([firstName, lastName], name: "fullName")
   @@map("users")
 }

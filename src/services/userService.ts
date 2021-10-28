@@ -19,6 +19,10 @@ export const createUser = async (firstName: string, lastName: string) => {
     if (err instanceof PrismaClientKnownRequestError) {
       if (err.code === "P2002") {
         throw userConflict;
+        // {
+        //   statusConde: 409,
+        //   message: "User already exists!",
+        // };
       }
 
       throw { err };

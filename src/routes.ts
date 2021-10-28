@@ -1,13 +1,7 @@
-import { Router } from "express";
-import {
-  deleteUser,
-  getAllUsers,
-  getUniqueUser,
-  postUser,
-  updateUserInfo,
-} from "./controllers/userController";
+import { Router } from 'express'
+import { CreateUserController } from './controllers/user/createUserController'
 
-export const router = Router();
+export const router = Router()
 
 /**
  * POST   -> create a new user
@@ -16,8 +10,10 @@ export const router = Router();
  * DELETE -> delete a user
  */
 
+const createUserController = new CreateUserController()
+
 router
-  .post("/user", postUser)
-  .get("/user", getUniqueUser, getAllUsers)
-  .put("/user", updateUserInfo)
-  .delete("/user", deleteUser);
+  .post('/user', createUserController.execute)
+  // .get('/user', getUniqueUser, getAllUsers)
+  // .put('/user', updateUserInfo)
+  // .delete('/user', deleteUser)

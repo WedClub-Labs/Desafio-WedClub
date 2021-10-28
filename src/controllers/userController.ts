@@ -1,73 +1,73 @@
-import { NextFunction, Request, Response } from "express";
+import { NextFunction, Request, Response } from 'express'
 import {
   createUser,
   removeUser,
   searchUniqueUser,
   searchUsers,
-  updateUser,
-} from "../services/userService";
+  updateUser
+} from '../services/userService'
 
 export const postUser = async (
   req: Request,
   res: Response,
   next: NextFunction
-) => {
-  const { firstName, lastName } = req.body;
+): Promise<Response> => {
+  const { firstName, lastName } = req.body
   try {
-    const newUser = await createUser(firstName, lastName);
+    const newUser = await createUser(firstName, lastName)
 
-    return res.json(newUser);
+    return res.json(newUser)
   } catch (err) {
-    next(err);
+    next(err)
   }
-};
+}
 
 export const getUniqueUser = async (
   req: Request,
   res: Response,
   next: NextFunction
 ) => {
-  const { firstName = null, lastName = null }: any = req.query;
+  const { firstName = null, lastName = null }: any = req.query
   if (!firstName && !lastName) {
-    return next();
+    return next()
   }
 
   if (!firstName || !lastName) {
     return next({
       statusCode: 400,
-      message: "This field is required!",
-    });
+      message: 'This field is required!'
+    })
   }
   try {
-    const user = await searchUniqueUser(firstName, lastName);
+    const user = await searchUniqueUser(firstName, lastName)
 
     if (!user) {
-      throw { message: "User not found!", statusCode: 404 };
+      throw { message: 'User not found!', statusCode: 404 }
     }
 
-    return res.json(user);
+    return res.json(user)
   } catch (err) {
-    next(err);
+    next(err)
   }
-};
+}
 
 export const getAllUsers = async (_req: Request, res: Response) => {
-  const users = await searchUsers();
+  const users = await searchUsers()
 
   if (!users.length) {
-    return res.status(204).send();
+    return res.status(204).send()
   }
 
-  return res.json(users);
-};
+  return res.json(users)
+}
 
 export const updateUserInfo = async (
   req: Request,
   res: Response,
   next: NextFunction
 ) => {
-  const { firstName, lastName }: any = req.query;
-  const { newFirstName = firstName, newLastName = lastName } = req.body;
+  const { firstName, lastName }: any = req.query
+  const { newFirstName = firstName, newLastName = lastName } = req.body
 
   try {
     const updatedUser = await updateUser(
@@ -75,26 +75,26 @@ export const updateUserInfo = async (
       lastName,
       newFirstName,
       newLastName
-    );
+    )
 
-    return res.json(updatedUser);
+    return res.json(updatedUser)
   } catch (err) {
-    return next(err);
+    return next(err)
   }
-};
+}
 
 export const deleteUser = async (
   req: Request,
   res: Response,
   next: NextFunction
 ) => {
-  const { firstName, lastName }: any = req.query;
+  const { firstName, lastName }: any = req.query
 
   try {
-    await removeUser(firstName, lastName);
+    await removeUser(firstName, lastName)
   } catch (err) {
-    return next(err);
+    return next(err)
   }
 
-  return res.status(204).send();
-};
+  return res.status(204).send()
+}
