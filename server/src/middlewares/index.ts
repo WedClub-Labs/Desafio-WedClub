@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from 'express'
 import { PrismaClientKnownRequestError } from '../prisma'
-import { dataNotFound, insertDataConflict, serverError } from '../utils'
+import { dataNotFound, insertDataConflict, serverError } from '../utils/objError'
 
 export const midErr = (
   err: Error,
