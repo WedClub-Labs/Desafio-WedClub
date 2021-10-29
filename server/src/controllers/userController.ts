@@ -8,39 +8,12 @@ export class UserController {
     res: Response,
     next: NextFunction
   ): Promise<Response> {
-    const { userName, email } = req.body
+    const { userName, email, image } = req.body
     try {
       const userService = new UserService()
-      const newUser = await userService.create(userName, email)
+      const newUser = await userService.create(userName, email, image)
 
       return res.status(201).json(newUser)
-    } catch (err) {
-      next(err)
-    }
-  }
-
-  async getUserByEmail (
-    req: Request,
-    res: Response,
-    next: NextFunction
-  ): Promise<Response> {
-    const { email = null } = req.body
-
-    if (!email) {
-      next()
-      return
-    }
-
-    try {
-      const userService = new UserService()
-      const user = await userService.getUserByEmail(email)
-
-      if (!user) {
-        const { statusCode, message } = dataNotFound
-        return res.status(statusCode).json({ message })
-      }
-
-      return res.json(user)
     } catch (err) {
       next(err)
     }

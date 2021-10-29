@@ -1,13 +1,16 @@
 import { useEffect, useState } from 'react'
 import { Link, useHistory } from 'react-router-dom'
-import UserCard from '../components/UserCard'
-import UserForm from '../components/UserForm'
-import { deleteUser, getUserById } from '../services/api'
-import { objError } from '../utils/errors'
+import UserCard from '../../components/UserCard/UserCard'
+import UserForm from '../../components/UserForm/UserForm'
+import { deleteUser, getUserById } from '../../services/api'
+import { objError } from '../../utils/errors'
+
+import './UserDetails.css'
 
 export default function UserDetails() {
   const [userName, setUserName] = useState('')
   const [email, setEmail] = useState('')
+  const [image, setImage] = useState('')
   const [id, setId] = useState('')
   const [redirect, setRedirect] = useState(false)
   const [errorMsg, setErrorMsg] = useState('')
@@ -20,10 +23,11 @@ export default function UserDetails() {
     const getUser = async (userId: string) => {
       try {
         const user = await getUserById(userId)
-        const { userName, email } = user
+        const { userName, email, image } = user
 
         setUserName(userName)
         setEmail(email)
+        setImage(image)
       } catch (err: any) {
         // console.log(err.message)
         setErrorMsg(objError['Internal Server Error'])
@@ -53,7 +57,14 @@ export default function UserDetails() {
 
       <UserForm update />
 
-      {!redirect && <UserCard userName={userName} email={email} />}
+      {!redirect && (
+        <section className="user-container">
+          <UserCard userName={userName} email={email} />
+          <div className="user-image">
+            <img src={image} alt={userName} />
+          </div>
+        </section>
+      )}
 
       <div>
         <button type="button" onClick={() => handleDeleteUser(id)}>

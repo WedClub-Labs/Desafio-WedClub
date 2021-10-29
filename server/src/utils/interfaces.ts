@@ -2,10 +2,5 @@ export interface User {
   userName: string
   email: string
   id: string
+  image: string
 }
-
-// export interface UserInfo {
-//   id: string
-//   newUserName: string
-//   newEmail: string
-// }

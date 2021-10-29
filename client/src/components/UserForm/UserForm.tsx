@@ -1,8 +1,8 @@
 import { FormEvent, useEffect, useState } from 'react'
 import { useHistory } from 'react-router'
-import { createUser, updateUser } from '../services/api'
-import { objError } from '../utils/errors'
-import { TypeForm } from '../utils/types'
+import { createUser, getUserImage, updateUser } from '../../services/api'
+import { objError } from '../../utils/errors'
+import { TypeForm } from '../../utils/types'
 
 export default function UserForm({ update = false }: TypeForm) {
   const [userName, setUserName] = useState('')
@@ -22,7 +22,8 @@ export default function UserForm({ update = false }: TypeForm) {
     }
 
     try {
-      await createUser(userName.trim(), email.trim())
+      const image = await getUserImage()
+      await createUser(userName.trim(), email.trim(), image)
       setEmail('')
       setUserName('')
     } catch (err: any) {

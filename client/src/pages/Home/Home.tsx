@@ -1,9 +1,9 @@
-import { SetStateAction, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Link, useHistory } from 'react-router-dom'
-import UserCard from '../components/UserCard'
-import UserForm from '../components/UserForm'
-import { deleteUser, getAllUsers } from '../services/api'
-import { UserResponse } from '../utils/types'
+import UserCard from '../../components/UserCard/UserCard'
+import UserForm from '../../components/UserForm/UserForm'
+import { deleteUser, getAllUsers } from '../../services/api'
+import { UserResponse } from '../../utils/types'
 
 export default function Home() {
   const [users, setUsers] = useState<UserResponse[]>([])
@@ -26,7 +26,7 @@ export default function Home() {
   //componentWillUnmount
   useEffect(() => () => setUsers([]), [window.location.pathname])
 
-  const handleDeleteUser = async (id: string, redirect: boolean) => {
+  const handleDeleteUser = async (id: string, redirect: boolean = false) => {
     try {
       await deleteUser(id)
 
@@ -61,7 +61,7 @@ export default function Home() {
                 <div>
                   <button
                     type="button"
-                    onClick={() => handleDeleteUser(id, false)}
+                    onClick={() => handleDeleteUser(id)}
                   >
                     Remover usuario
                   </button>

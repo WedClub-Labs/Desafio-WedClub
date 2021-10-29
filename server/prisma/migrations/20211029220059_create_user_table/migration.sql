@@ -3,6 +3,7 @@ CREATE TABLE "users" (
     "id" TEXT NOT NULL,
     "userName" TEXT NOT NULL,
     "email" TEXT NOT NULL,
+    "image" TEXT NOT NULL,
 
     CONSTRAINT "users_pkey" PRIMARY KEY ("id")
 );

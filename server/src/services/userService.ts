@@ -4,26 +4,18 @@ import { User } from '../utils/interfaces'
 export class UserService {
   async create (
     userName: string,
-    email: string
+    email: string,
+    image: string
   ): Promise<User> {
     const newUser = await prismaClient.user.create({
       data: {
         userName,
-        email
+        email,
+        image
       }
     })
 
     return newUser
-  }
-
-  async getUserByEmail (email: string): Promise<User> {
-    const user = await prismaClient.user.findUnique({
-      where: {
-        email
-      }
-    })
-
-    return user
   }
 
   async getUserById (id: string): Promise<User> {

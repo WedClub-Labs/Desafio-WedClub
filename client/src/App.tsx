@@ -1,6 +1,6 @@
 import { Route, Switch } from 'react-router'
-import Home from './pages/Home'
-import UserDetails from './pages/UserDetails'
+import Home from './pages/Home/Home'
+import UserDetails from './pages/UserDetails/UserDetails'
 
 export default function App() {
   return (
