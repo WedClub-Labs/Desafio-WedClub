@@ -4,9 +4,8 @@ export interface User {
   id: string
 }
 
-export interface UserInfo {
-  prevUserName: string
-  prevEmail: string
-  newUserName: string
-  newEmail: string
-}
+// export interface UserInfo {
+//   id: string
+//   newUserName: string
+//   newEmail: string
+// }

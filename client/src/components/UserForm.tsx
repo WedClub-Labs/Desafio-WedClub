@@ -1,10 +1,8 @@
 import { FormEvent, useEffect, useState } from 'react'
 import { useHistory } from 'react-router'
-import { createUser } from '../services/api'
-
-type TypeForm = {
-  update?: boolean
-}
+import { createUser, updateUser } from '../services/api'
+import { objError } from '../utils/errors'
+import { TypeForm } from '../utils/types'
 
 export default function UserForm({ update = false }: TypeForm) {
   const [userName, setUserName] = useState('')
@@ -17,15 +15,28 @@ export default function UserForm({ update = false }: TypeForm) {
 
   const handleCreateSubmit = async (event: FormEvent) => {
     event.preventDefault()
+
     if (!email.trim() || !userName.trim()) {
       setErrorMsg('Todos os campos devem ser preenchidos!')
       return setHasError(true)
     }
 
-    await createUser(userName, email)
+    try {
+      await createUser(userName.trim(), email.trim())
+      setEmail('')
+      setUserName('')
+    } catch (err: any) {
+      // const { message } = err.response.data
+      // console.log(message)
+      if (err.response) {
+        const { statusText } = err.response
+        setErrorMsg(objError[statusText])
+      } else {
+        setErrorMsg(objError['Internal Server Error'])
+      }
 
-    setEmail('')
-    setUserName('')
+      return setHasError(true)
+    }
   }
 
   useEffect(() => {
@@ -37,17 +48,28 @@ export default function UserForm({ update = false }: TypeForm) {
     return () => clearTimeout(timer)
   }, [hasError])
 
-  const handleUpdateSubmit = (event: FormEvent) => {
+  const handleUpdateSubmit = async (event: FormEvent) => {
     event.preventDefault()
-    if (!email.trim() || !userName.trim()) {
-      setErrorMsg('Todos os campos devem ser preenchidos!')
+
+    try {
+      const [, id] = history.location.pathname.split('/user/')
+      await updateUser(id, userName.trim(), email.trim())
+
+      setRedirect(true)
+
+      return setTimeout(() => history.push('/'), 2000)
+    } catch (err: any) {
+      // const { message } = err.response.data
+      // console.log(message)
+      if (err.response) {
+        const { statusText = null } = err.response
+        setErrorMsg(objError[statusText])
+      } else {
+        setErrorMsg(objError['Internal Server Error'])
+      }
 
       return setHasError(true)
     }
-
-    setRedirect(true)
-
-    setTimeout(() => history.push('/'), 2000)
   }
 
   return (

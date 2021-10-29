@@ -1,16 +1,10 @@
-import { Link } from "react-router-dom";
+import { UserCardProps } from '../utils/types'
 
-type UserCardProps = {
-  id: string,
-  userName: string,
-  email: string
-}
-
-export default function UserCard({ id, userName, email }: UserCardProps) {
+export default function UserCard({ userName, email }: UserCardProps) {
   return (
-    <Link to={`/user/${id}`}>
+    <>
       <div>Nome: {userName}</div>
       <div>Email: {email}</div>
-    </Link>
+    </>
   )
 }

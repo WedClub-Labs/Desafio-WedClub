@@ -19,7 +19,7 @@ export class UserController {
     }
   }
 
-  async getUser (
+  async getUserByEmail (
     req: Request,
     res: Response,
     next: NextFunction
@@ -33,7 +33,34 @@ export class UserController {
 
     try {
       const userService = new UserService()
-      const user = await userService.getUser(email)
+      const user = await userService.getUserByEmail(email)
+
+      if (!user) {
+        const { statusCode, message } = dataNotFound
+        return res.status(statusCode).json({ message })
+      }
+
+      return res.json(user)
+    } catch (err) {
+      next(err)
+    }
+  }
+
+  async getUserById (
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ): Promise<Response> {
+    const { id = null } = req.params
+
+    if (!id) {
+      next()
+      return
+    }
+
+    try {
+      const userService = new UserService()
+      const user = await userService.getUserById(id)
 
       if (!user) {
         const { statusCode, message } = dataNotFound
@@ -67,20 +94,21 @@ export class UserController {
     next: NextFunction
   ): Promise<Response> {
     const {
-      prevUserName = null,
-      prevEmail = null,
-      newUserName = prevUserName,
-      newEmail = prevEmail
+      userName = null,
+      email = null
     } = req.body
 
-    if (!newUserName || !newEmail) {
+    const { id } = req.params;
+
+    if (!userName || !email) {
       const { statusCode, message } = missingData
       return res.status(statusCode).json({ message })
     }
 
     try {
       const userService = new UserService()
-      await userService.updateUser(req.body)
+      
+      await userService.updateUser({...req.body, id})
 
       return res.status(204).send('Success!')
     } catch (err) {
@@ -93,9 +121,11 @@ export class UserController {
     res: Response,
     next: NextFunction
   ): Promise<Response> {
+    const { id } = req.params
+
     try {
       const userService = new UserService()
-      await userService.getAllUsers()
+      await userService.deleteUser(id)
 
       return res.status(204).send('Sucess!')
     } catch (err) {

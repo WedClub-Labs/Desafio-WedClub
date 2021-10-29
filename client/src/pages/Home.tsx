@@ -1,21 +1,42 @@
-import { useEffect, useState } from 'react'
+import { SetStateAction, useEffect, useState } from 'react'
+import { Link, useHistory } from 'react-router-dom'
 import UserCard from '../components/UserCard'
 import UserForm from '../components/UserForm'
-import { getAllUsers } from '../services/api'
-import { UserResponse } from '../utils'
+import { deleteUser, getAllUsers } from '../services/api'
+import { UserResponse } from '../utils/types'
 
 export default function Home() {
   const [users, setUsers] = useState<UserResponse[]>([])
 
+  const history = useHistory()
+
   useEffect(() => {
     const getAllUsersList = async () => {
-      const users = await getAllUsers()
-
-      setUsers(users)
+      try {
+        const users = await getAllUsers()
+        setUsers(users)
+      } catch (err: any) {
+        // console.log(err.response.data.message)
+      }
     }
 
     getAllUsersList()
   }, [users])
+
+  //componentWillUnmount
+  useEffect(() => () => setUsers([]), [window.location.pathname])
+
+  const handleDeleteUser = async (id: string, redirect: boolean) => {
+    try {
+      await deleteUser(id)
+
+      if (redirect) {
+        return setTimeout(() => history.push('/'), 2000)
+      }
+    } catch (err: any) {
+      // console.log(err.message)
+    }
+  }
 
   return (
     <div>
@@ -30,9 +51,22 @@ export default function Home() {
         ) : (
           <ul>
             {users.map(({ id, userName, email }) => (
-              <li key={id}>
-                <UserCard id={id} userName={userName} email={email} />
-              </li>
+              <section key={id}>
+                <Link to={`/user/${id}`}>
+                  <li>
+                    <UserCard userName={userName} email={email} />
+                  </li>
+                </Link>
+
+                <div>
+                  <button
+                    type="button"
+                    onClick={() => handleDeleteUser(id, false)}
+                  >
+                    Remover usuario
+                  </button>
+                </div>
+              </section>
             ))}
           </ul>
         )}

@@ -1,49 +1,45 @@
-import axios, { AxiosError } from 'axios'
-import { UserResponse } from '../utils'
+import axios from 'axios'
+import { UserResponse } from '../utils/types'
 
 const api = axios.create({
   baseURL: 'http://localhost:3001',
 })
 
-type ConflictError = {
-  response: {
-    data: {
-      message: string
-    }
-  }
-}
-
 export const createUser = async (userName: string, email: string) => {
-  try {
-    const response = await api.post<UserResponse>('/user', {
-      userName,
-      email,
-    })
+  const response = await api.post<UserResponse>('/user', {
+    userName,
+    email,
+  })
 
-    return response.data // { userName, email, id }
-  } catch (err: AxiosError<ConflictError>) {
-    return err.response.data.message
-  }
+  return response.data // { userName, email, id }
 }
 
 export const getAllUsers = async () => {
-  try {
-    const response = await api.get<UserResponse>('/user')
+  const response = await api.get<UserResponse[]>('/user')
 
-    return response.data // [{ userName, email, id }]
-  } catch (err: AxiosError<ConflictError>) {
-    return err.response.data.message
-  }
+  return response.data // [{ userName, email, id }]
 }
 
-export const getUser = async (email: string) => {
-  try {
-    const response = await api.get('/user', {
-      data: { email },
-    })
+export const getUserById = async (id: string) => {
+  const response = await api.get<UserResponse>(`/user/${id}`, {
+    data: { id },
+  })
 
-    return response.data
-  } catch (err: AxiosError) {
-    return err.response.data.message
-  }
+  return response.data
 }
+
+export const updateUser = async (
+  id: string,
+  userName: string,
+  email: string
+) => {
+  const response = await api.put<UserResponse>(`/user/${id}`, {
+    userName,
+    email,
+  })
+
+  return response.data
+}
+
+export const deleteUser = async (id: string) =>
+  api.delete<UserResponse>(`/user/${id}`)

@@ -14,9 +14,10 @@ const userController = new UserController()
 
 router
   .post('/user', userController.createUser)
-  .get('/user', userController.getUser, userController.getAllUsers)
-  .put('/user', userController.updateUser)
-  .delete('/user', userController.deleteUser)
+  .get('/user', userController.getUserByEmail, userController.getAllUsers)
+  .get('/user/:id', userController.getUserById)
+  .put('/user/:id', userController.updateUser)
+  .delete('/user/:id', userController.deleteUser)
 
 
 // get user -> { userName, email }
