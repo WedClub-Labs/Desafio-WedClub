@@ -1,28 +1,62 @@
 # Desafio WedClub 2021
 
-O desafio consiste em criar uma solução que envolva uma API REST com Node.js (backend) e uma aplicação para CRUD de usuários em React.js (frontend). Adorariamos se souber aplicar o Typescript em ambos os contextos (backend e frontend).
+### Essa é uma aplicação CRUD básica que permite gerenciar uma lista de usuários, ou seja, é possível criar, ler, atualizar e deletar usuários.
 
-## Requisitos:
- - Criar uma rota para retornar usuários
- - Criar uma rota para retornar um usuário específico
- - Criar uma rota para criar usuário
- - Criar uma rota para atualizar usuário
- - Criar uma rota para excluir usuário
- - Criar uma tela para gerenciamento de usuários (Listar, Criar, Atualizar e Excluir)
- - Será obrigatório que ao cadastrar um usuário o mesmo não possa ser duplicado
- - Será obrigatório que o usuário tenha uma imagem de perfil, e ela precisará ser processada para ficar com 200x200 e com 70% da qualidade
+---
 
-## Instruções:
-Queremos que você use a criatividade e proatividade durante esse desafio, portanto fique à vontade para usar frameworks, bibliotecas e/ou módulos de terceiros, assim como a arquitetura (stack) que tiver mais aptidão. Lembre-se que não é permitido copiar códigos prontos da internet. A entrega do desafio deve ser via Github através de um Pull Request com seu nome. O prazo de entrega é de 3 dias a partir do email recebido. Caso não consiga fazer o PR para o nosso repo, vc pode clonar o projeto e subir ele em um repo pessoal com acesso público, e então enviar o link para os emails abaixo:
+## ATENÇÃO !!
 
- - wellmmer@wedclub.com.br
- - joao@wedclub.com.br
- - dion@wedclub.com.br
+> ## Essa aplicação opera somente em modo de DESENVOLVIMENTO. É preciso ter o [postgreSQL](https://www.postgresql.org/) e o [prisma](prisma.io) instalados em sua máquina local.
 
+---
 
+> Lembre-se de configurar corretamente sua variável de ambiente com `DATABASE_URL="postgresql://username:password@localhost:5432/db_name?schema=schema_name"`. Sendo `username` o usuário postgres, `password` sua respectiva senha, `db_name` o nome do banco de dados e `schema_name` o esquema (caso não tenha nenhum criado, ele usará `public` como padrão, então basta substituir `schema_name` por `public`)
 
-Boa sorte!
+---
 
+> A partir de agora vamos usar o `yarn` para instalação de dependências do projeto. Caso não tenha instalado em sua máquina, consulte sua [documentação](https://yarnpkg.com/getting-started) para uma instalação apropriada
 
+---
 
+## Front-End
 
+Clone esse repositório em sua máquina e execute os seguintes comandos:
+
+```sh
+cd client
+```
+
+```sh
+yarn
+```
+
+```sh
+yarn dev
+```
+
+A aplicação rodará em `http://localhost:3000` em modo de desenvolvimento
+
+---
+
+## Back-End
+
+Para rodar a aplicação em modo de desenvolvimento, execute os seguintes comandos:
+
+```sh
+cd server
+```
+
+```sh
+yarn
+```
+
+```sh
+yarn dev
+```
+
+A aplicação rodará em `http://localhost:3001` em modo de desenvolvimento
+
+## Considerações Finais
+
+Agradeço pela oportunidade fantástica que me foi proporcionada pela equipe da [WedCub](https://wedclub.com.br/). Infelizmente, não pude concluir com perfeição a tarefa que me foi passada, pois além da falta de tempo, nesses últimos 3 dias, ainda tive de aprender TypeScript (não que isso tenha sido ruim, mas foi um desafio pra mim).
+Dito isso, peço desculpas, pela falta de organização de uma estrutura adequada ao projeto, por não colocá-lo em produção e, principalmente, por não implementar nenhuma estilização básica.

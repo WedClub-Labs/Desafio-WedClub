@@ -18,23 +18,3 @@ router
   .get('/user/:id', userController.getUserById)
   .put('/user/:id', userController.updateUser)
   .delete('/user/:id', userController.deleteUser)
-
-
-// get user -> { userName, email }
-
-// post user -> { userName, email }
-
-// get users -> [{ userName, email }]
-
-/**
- * newUser = {
- *  userName
- *  email
- *  newUserName
- *  newEmail
- * }
- */
-
-// update user (newUser) -> { userName, email }
-
-// delete user -> void
